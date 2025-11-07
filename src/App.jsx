@@ -1,28 +1,38 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Features from './components/Features';
+import Explore from './components/Explore';
+import AuthModal from './components/AuthModal';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [authOpen, setAuthOpen] = useState(false);
+  const [mode, setMode] = useState('signup');
+
+  const openSignUp = () => { setMode('signup'); setAuthOpen(true); };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
-        </div>
-      </div>
+    <div className="min-h-screen flex flex-col bg-white text-gray-900">
+      <Navbar />
+      <main className="flex-1">
+        <Hero onSignUp={openSignUp} />
+        <Features />
+        <Explore />
+        <footer id="about" className="border-t border-black/5 bg-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-gray-600">© {new Date().getFullYear()} EventSphere. All rights reserved.</p>
+            <div className="flex items-center gap-5 text-sm">
+              <a className="text-gray-600 hover:text-gray-900" href="#features">Features</a>
+              <a className="text-gray-600 hover:text-gray-900" href="#explore">Explore</a>
+              <a className="text-gray-600 hover:text-gray-900" href="#about">About</a>
+            </div>
+          </div>
+        </footer>
+      </main>
+
+      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} mode={mode} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
